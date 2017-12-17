@@ -63,7 +63,7 @@ def get_wallpaper():
 				extension = str(posts[post]['ext'])
 
 				# this better not be a gif or webm..
-				if extension == '.jpg' or extension == '.png':
+				if extension == '.jpg' or extension == '.png' or extension == 'jpeg':
 
 					# TODO implement another filter to filter nsfw
 					filename = str(posts[post]['tim'])
