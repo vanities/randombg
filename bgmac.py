@@ -83,8 +83,8 @@ def get_wallpaper():
 				sleep(1)	# api rule
 				main()
 	# why does 4chan time me out?
-	except (HTTPError):
-		print('Could not connect to /wsg/..')
+	except Exception as e:
+		print('Could not connect to /wsg/..', e)
 		sleep(1)	 # api rule
 		main()
 
