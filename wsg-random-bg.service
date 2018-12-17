@@ -1,0 +1,11 @@
+[Unit]
+Description=4chan wsg random background
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/./wsg-random-bg
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
