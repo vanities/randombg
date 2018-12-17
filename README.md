@@ -1,19 +1,44 @@
-# mac-randombg
+# wsg-random-bg
 gets a random wallpaper from /wg/
 
-# install on mac:
+
+## mac installation
+
+### install on mac:
 ```bash
-cp bgmac.plist ~/Library/LaunchAgents/bgmac.plist
-launchctl load ~/Library/LaunchAgents/bgmac.plist
-launchctl start bgmac 
+sudo make mac
 ```
 
-# check:
+### uninstall on mac:
+
+```bash
+sudo make clean-mac
+```
+### check:
 ```bash
 launchctl list
 ```
 
-# stop:
+### stop:
 ```bash
 launchctl stop bgmac
+```
+
+## linux installation
+
+
+### install on linux:
+
+```bash
+
+sudo make linux
+
+```
+
+### uninstall on mac:
+
+```bash
+
+sudo make clean-linux
+
 ```
