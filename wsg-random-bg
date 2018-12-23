@@ -5,7 +5,7 @@ from json import loads
 from random import randint
 from time import sleep
 from os.path import join, expanduser, isfile, exists
-from os import makedirs
+from os import makedirs, environ
 from subprocess import call
 from sys import stdout
 import subprocess
@@ -93,7 +93,8 @@ def get_wallpaper():
 
 def set_wallpaper(file_path):
 	if isfile(file_path):
-            subprocess.call(['feh', '--bg-fill', file_path])
+            subprocess.call(['feh', '--bg-fill', file_path],
+                            env=environ.copy())
 
 if __name__ == "__main__":
 	main()

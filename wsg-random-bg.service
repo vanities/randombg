@@ -1,10 +1,13 @@
 [Unit]
 Description=4chan wsg random background
 After=network.target
+After=xorg.target
 
 [Service]
+User=vanities
+Environment="DISPLAY=:0"
 ExecStart=/usr/local/bin/./wsg-random-bg
-Restart=always
+Restart=on-failure
 RestartSec=5s
 
 [Install]
