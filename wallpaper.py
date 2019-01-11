@@ -20,7 +20,7 @@ class Wallpaper:
         thread = randint(0,14)
         post = 0
 
-        # make sure we recieve the object from the api 
+        # make sure we recieve the object from the api
         try:
 
             with urlopen('https://a.4cdn.org/wg/' + page + '.json') as url:
@@ -36,7 +36,7 @@ class Wallpaper:
 
             # random number post
             post = randint(0, post-1)
-			
+
             while True:
 
                 # makes sure the post we have has an image

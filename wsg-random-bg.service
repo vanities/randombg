@@ -6,6 +6,7 @@ After=xorg.target
 [Service]
 User=vanities
 Environment="DISPLAY=:0"
+Environment=XAUTHORITY=/home/vanities/.Xauthority
 ExecStart=/usr/local/bin/./wsg-random-bg
 Restart=on-failure
 RestartSec=5s

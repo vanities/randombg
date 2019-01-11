@@ -11,10 +11,10 @@ from sys import stdout
 import subprocess
 
 # OSA script used for mac
-SCRIPT = """/usr/bin/osascript<<END 
-tell application "Finder" 
-set desktop picture to POSIX file "%s" 
-end tell 
+SCRIPT = """/usr/bin/osascript<<END
+tell application "Finder"
+set desktop picture to POSIX file "%s"
+end tell
 END"""
 
 # custom directory
@@ -37,7 +37,7 @@ def get_wallpaper_path(file_name):
 	file_path = join(dir, file_name)
 	return file_path
 
-# uses the 4chan api to get an image from /wg/			
+# uses the 4chan api to get an image from /wg/
 def get_wallpaper():
 
 	# random page & thread
@@ -60,7 +60,7 @@ def get_wallpaper():
 
 			# random number post
 			post = randint(0,post-1)
-			
+
 			# makes sure the post we have has an image
 			if 'ext' in posts[post]:
 				extension = str(posts[post]['ext'])
@@ -72,13 +72,13 @@ def get_wallpaper():
 					filename = str(posts[post]['tim'])
 					full_url = 'http://i.4cdn.org/wg/' + filename + extension
 					print('Found file from /wg/ @: ' + full_url)
-					
+
 					# output file path
 					file_path = get_wallpaper_path(filename + extension)
-					
+
 					# put the image in the directory specified
 					response = urlretrieve(full_url, file_path)
-					
+
 					# set the wallpaper
 					set_wallpaper(file_path)
 			else:
