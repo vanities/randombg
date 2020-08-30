@@ -1,3 +1,5 @@
+#!/usr/local/bin/python3
+
 from urllib.request import urlopen, urlretrieve
 from json import loads
 from random import randint
@@ -6,111 +8,105 @@ from os.path import join, expanduser, isfile, exists
 from os import makedirs
 from subprocess import call
 from sys import stdout
+from appscript import app, mactypes
 
 # OSA script used for mac
-SCRIPT = """/usr/bin/osascript<<END 
-tell application "Finder" 
-set desktop picture to POSIX file "%s" 
-end tell 
+SCRIPT = """/usr/bin/osascript<<END
+tell application "Finder"
+set desktop picture to POSIX file "%s"
+end tell
 END"""
 
 # custom directory
 IMAGE_DIR = ''
 
 def main():
-	# get that shit!
-	get_wallpaper()
+    # get that shit!
+    get_wallpaper()
 
 # assures the path for the file is good
 def get_wallpaper_path(file_name):
-	if '' != IMAGE_DIR.strip():
-		dir = IMAGE_DIR
-	else:
-		dir = join(expanduser("~"), 'Pictures/wallpapers')
+    if '' != IMAGE_DIR.strip():
+        dir = IMAGE_DIR
+    else:
+        dir = join(expanduser("~"), 'Pictures/wallpapers')
 
-	if not exists(dir):
-		makedirs(dir)
+    if not exists(dir):
+        makedirs(dir)
 
-	file_path = join(dir, file_name)
-	return file_path
+    file_path = join(dir, file_name)
+    return file_path
 
-# uses the 4chan api to get an image from /wg/			
+# uses the 4chan api to get an image from /wg/
 def get_wallpaper():
 
-	# random page & thread
-	page = str(randint(0,9))
-	thread = randint(0,14)
-	post = 0
+    # random page & thread
+    page = str(randint(0,9))
+    thread = randint(0,14)
+    post = 0
 
-	# make sure we recieve the object from the api
-	try:
-		with urlopen('https://a.4cdn.org/wg/' + page + '.json') as url:
-			json = loads(url.read().decode())
+    # make sure we recieve the object from the api
+    try:
+        with urlopen('https://a.4cdn.org/wg/' + page + '.json') as url:
+            json = loads(url.read().decode())
 
-			# set the thread and post
-			thread = json['threads'][thread]
-			posts = thread['posts']
+            # set the thread and post
+            thread = json['threads'][thread]
+            posts = thread['posts']
 
-			# count the # of posts in thread
-			for p in posts:
-				post += 1
+            # count the # of posts in thread
+            for p in posts:
+                post += 1
 
-			# random number post
-			post = randint(0,post-1)
-			
-			# makes sure the post we have has an image
-			if 'ext' in posts[post]:
-				extension = str(posts[post]['ext'])
+            # random number post
+            post = randint(0,post-1)
 
-				# this better not be a gif or webm..
-				if extension == '.jpg' or extension == '.png' or extension == 'jpeg':
+            # makes sure the post we have has an image
+            if 'ext' in posts[post]:
+                extension = str(posts[post]['ext'])
 
-					# TODO implement another filter to filter nsfw
-					filename = str(posts[post]['tim'])
-					full_url = 'http://i.4cdn.org/wg/' + filename + extension
-					print('Found file from /wg/ @: ' + full_url)
-					
-					# output file path
-					file_path = get_wallpaper_path(filename + extension)
-					
-					# put the image in the directory specified
-					response = urlretrieve(full_url,file_path)
-					
-					# set the wallpaper
-					set_wallpaper(file_path)
-			else:
-				print('No file in this post..')
-				sleep(1)	# api rule
-				main()
-	# why does 4chan time me out?
-	except Exception as e:
-		print('Could not connect to /wsg/..', e)
-		sleep(1)	 # api rule
-		main()
+                # this better not be a gif or webm..
+                if extension == '.jpg' or extension == '.png' or extension == 'jpeg':
+
+                    # TODO implement another filter to filter nsfw
+                    filename = str(posts[post]['tim'])
+                    full_url = 'http://i.4cdn.org/wg/' + filename + extension
+                    print('Found file from /wg/ @: ' + full_url)
+
+                    # output file path
+                    file_path = get_wallpaper_path(filename + extension)
+
+                    # put the image in the directory specified
+                    response = urlretrieve(full_url,file_path)
+
+                    # set the wallpaper
+                    set_wallpaper(file_path)
+            else:
+                print('No file in this post..')
+                sleep(1)    # api rule
+                main()
+    # why does 4chan time me out?
+    except Exception as e:
+        print('Could not connect to /wsg/..', e)
+        sleep(1)     # api rule
+        main()
 
 # script for setting the wallpaper
 def script(code):
-	return call(
-		['bash', '-c', code],
-		shell=False,
-		stdin=None,
-		stdout=stdout,
-		stderr=stdout)
+    return call(
+        ['bash', '-c', code],
+        shell=False,
+        stdin=None,
+        stdout=stdout,
+        stderr=stdout)
 
 
 # sets the wallpaper using sqlite3 db
-def set_wallpaper(file_path):
-	if isfile(file_path):
-	# See http://superuser.com/a/689804.
-		assert \
-			script('''
-			sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "update data set value = '%(file)s'"
-			killall Dock
-			''' % {
-			'file': file_path,
-			}) == 0, \
-			'Failed to set wallpaper'
-		print('Wallpaper set to ' + file_path)
+def set_wallpaper(filepath):
+
+    if isfile(filepath):
+        app('Finder').desktop_picture.set(mactypes.File(filepath))
+        print('Wallpaper set to ' + filepath)
 
 if __name__ == "__main__":
-	main()
+    main()

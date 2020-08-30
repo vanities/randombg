@@ -2,9 +2,12 @@
 
 
 mac:
+	cp bgmac.py /usr/local/bin
 	cp bgmac.plist ~/Library/LaunchAgents/bgmac.plist
+	sudo chmod 644 ~/Library/LaunchAgents/bgmac.plist
+	sudo chown root ~/Library/LaunchAgents/bgmac.plist
 	launchctl load ~/Library/LaunchAgents/bgmac.plist
-	launchctl start bgmac 
+	launchctl start bgmac
 
 linux:
 	cp wsg-random-bg /usr/local/bin
@@ -14,8 +17,9 @@ linux:
 	systemctl enable wsg-random-bg.service
 
 clean-mac:
+	launchctl unload ~/Library/LaunchAgents/bgmac.plist
 	launchctl stop bgmac
-	rm -rf ~/Library/LaunchAgents/bgmac.plist
+	sudo rm -rf ~/Library/LaunchAgents/bgmac.plist
 
 clean-linux:
 	rm -rf /usr/local/bin/wsg-random-bg
