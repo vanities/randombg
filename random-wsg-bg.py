@@ -7,18 +7,11 @@ from time import sleep
 from os.path import join, expanduser, isfile, exists
 from os import makedirs
 from subprocess import call
-from sys import stdout
-from appscript import app, mactypes
-
-# OSA script used for mac
-SCRIPT = """/usr/bin/osascript<<END
-tell application "Finder"
-set desktop picture to POSIX file "%s"
-end tell
-END"""
+from sys import stdout, platform
 
 # custom directory
 IMAGE_DIR = ''
+
 
 def main():
     # get that shit!
@@ -66,7 +59,7 @@ def get_wallpaper():
                 extension = str(posts[post]['ext'])
 
                 # this better not be a gif or webm..
-                if extension == '.jpg' or extension == '.png' or extension == 'jpeg':
+                if extension in ['.jpg', '.png', 'jpeg']:
 
                     # TODO implement another filter to filter nsfw
                     filename = str(posts[post]['tim'])
@@ -79,8 +72,6 @@ def get_wallpaper():
                     # put the image in the directory specified
                     response = urlretrieve(full_url,file_path)
 
-                    # set the wallpaper
-                    set_wallpaper(file_path)
             else:
                 print('No file in this post..')
                 sleep(1)    # api rule
@@ -103,10 +94,16 @@ def script(code):
 
 # sets the wallpaper using sqlite3 db
 def set_wallpaper(filepath):
+    if platform == "darwin":
+        from appscript import app, mactypes
 
-    if isfile(filepath):
-        app('Finder').desktop_picture.set(mactypes.File(filepath))
-        print('Wallpaper set to ' + filepath)
+        if isfile(filepath):
+            app('Finder').desktop_picture.set(mactypes.File(filepath))
+            print('Wallpaper set to ' + filepath)
+    elif platform == "linux":
+        if isfile(file_path):
+                subprocess.call(['feh', '--bg-fill', file_path],
+                                env=environ.copy())
 
 if __name__ == "__main__":
     main()

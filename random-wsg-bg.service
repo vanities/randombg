@@ -7,7 +7,7 @@ After=xorg.target
 User=vanities
 Environment="DISPLAY=:0"
 Environment=XAUTHORITY=/home/vanities/.Xauthority
-ExecStart=/usr/local/bin/./wsg-random-bg
+ExecStart=/usr/local/bin/./random-wsg-bg.py
 Restart=on-failure
 RestartSec=5s
 

@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.me.bgmac</string>
+    <string>com.me.random-wsg-bg</string>
     <key>ProgramArguments</key>
     <array>
     	<string>/usr/local/bin/python3</string>
-        <string>/usr/local/bin/bgmac.py</string>
+        <string>/usr/local/bin/random-wsg-bg.py</string>
     </array>
     <key>StartInterval</key>
     <integer>3600</integer>
