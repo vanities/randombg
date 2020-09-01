@@ -1,4 +1,4 @@
-# wsg-random-bg
+# randombg
 gets a random wallpaper from /wg/
 
 
@@ -35,7 +35,7 @@ sudo make linux
 
 ```
 
-### uninstall on mac:
+### uninstall on linux:
 
 ```bash
 
