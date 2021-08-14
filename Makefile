@@ -9,6 +9,11 @@ MAC_SERVICE_INSTALL_PATH=~/Library/LaunchAgents/$(MAC_SERVICE_FILENAME)
 LINUX_SERVICE_FILENAME=$(APP).service
 LINUX_SERVICE_INSTALL_PATH=/etc/systemd/system/$(LINUX_SERVICE_FILENAME)
 
+deps:
+	pip3 install appscript
+
+mac_check:
+	launchctl list | grep random
 
 mac:
 	cp ${FILENAME} ${INSTALL_PATH}
@@ -24,12 +29,12 @@ linux:
 	systemctl start $(LINUX_SERVICE_FILENAME)
 	systemctl enable $(LINUX_SERVICE_FILENAME)
 
-clean-mac:
+uninstall_mac:
 	launchctl unload $(MAC_SERVICE_INSTALL_PATH)
 	launchctl stop $(APP)
 	rm -rf $(MAC_SERVICE_INSTALL_PATH)
 
-clean-linux:
+uninstall_linux:
 	rm -rf $(INSTALL_PATH)
 	rm -rf $(LINUX_SERVICE_INSTALL_PATH)
 	systemctl daemon-reload

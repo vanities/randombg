@@ -9,27 +9,20 @@ from os import makedirs
 from subprocess import call
 from sys import stdout, platform
 
-# custom directory
-IMAGE_DIR = ''
-
-
 def main():
     # get that shit!
-    wallpaper = get_wallpaper()
+    wallpaper = download_wallpaper()
     set_wallpaper(wallpaper)
 
 # assures the path for the file is good
-def get_wallpaper_path(file_name):
-    if '' != IMAGE_DIR.strip():
-        dir = IMAGE_DIR
-    else:
-        dir = join(expanduser("~"), 'Pictures/wallpapers')
+def get_wallpaper_path(filename):
+    directory_path = join(expanduser("~"), 'Pictures/wallpapers')
 
-    if not exists(dir):
-        makedirs(dir)
+    if not exists(directory_path):
+        makedirs(directory_path)
 
-    file_path = join(dir, file_name)
-    return file_path
+    filepath = join(directory_path, filename)
+    return filepath
 
 # uses the 4chan api to get an image from /wg/
 # returns the filepath
@@ -45,6 +38,9 @@ def download_wallpaper():
     max_attempts = 10
     while attempts < max_attempts:
         try:
+            # random page & thread
+            page = str(randint(0,9))
+            thread = randint(0,14)
             with urlopen('https://a.4cdn.org/wg/' + page + '.json') as url:
                 json = loads(url.read().decode())
 
@@ -53,7 +49,7 @@ def download_wallpaper():
                 posts = thread['posts']
 
                 # random number post
-                post = randint(0, len(post)-1)
+                post = randint(0, len(posts)-1)
 
                 # makes sure the post we have has an image
                 if 'ext' in posts[post]:
