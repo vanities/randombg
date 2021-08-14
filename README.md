@@ -6,23 +6,19 @@ gets a random wallpaper from /wg/
 
 ### install on mac:
 ```bash
-sudo make mac
+make mac
 ```
 
 ### uninstall on mac:
 
 ```bash
-sudo make clean-mac
+make mac_uninstall
 ```
 ### check:
 ```bash
-launchctl list
+make mac_check
 ```
 
-### stop:
-```bash
-launchctl stop bgmac
-```
 
 ## linux installation
 
@@ -36,9 +32,8 @@ sudo make linux
 ```
 
 ### uninstall on linux:
-
 ```bash
 
-sudo make clean-linux
+sudo make linux_unintstall
 
 ```

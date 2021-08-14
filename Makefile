@@ -13,6 +13,7 @@ deps:
 	pip3 install appscript
 
 mac_check:
+	# check launchcontrol for help
 	launchctl list | grep random
 
 mac:
