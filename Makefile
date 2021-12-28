@@ -17,7 +17,7 @@ mac_check:
 	launchctl list | grep random
 
 mac:
-	-cp ${FILENAME} ${INSTALL_PATH}
+	-sudo cp ${FILENAME} ${INSTALL_PATH}
 	cp ${MAC_SERVICE_FILENAME} ${MAC_SERVICE_INSTALL_PATH}
 	chmod 644 ${MAC_SERVICE_INSTALL_PATH}
 	chmod +x ${MAC_SERVICE_INSTALL_PATH}
