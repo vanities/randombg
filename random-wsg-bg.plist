@@ -7,6 +7,6 @@
     <key>Program</key>
     <string>/usr/local/bin/random-wsg-bg</string>
     <key>StartInterval</key>
-    <integer>3600</integer>
+    <integer>1800</integer>
 </dict>
 </plist>
