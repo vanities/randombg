@@ -1,5 +1,5 @@
 # randombg
-gets a random wallpaper from /wg/
+gets a random wallpaper from /wg/ on a timer for mac and linux
 
 
 ## mac installation
