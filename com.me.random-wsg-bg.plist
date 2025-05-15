@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN"
+   "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- label must match your identifier -->
+    <key>Label</key>
+    <string>com.me.random-wsg-bg</string>
+
+    <!-- the script you want to run -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/random-wsg-bg</string>
+    </array>
+
+    <!-- run every 1800 seconds -->
+    <key>StartInterval</key>
+    <integer>1800</integer>
+
+    <!-- also run once when it’s loaded -->
+    <key>RunAtLoad</key>
+    <true/>
+
+    <!-- where stdout/stderr go -->
+    <key>StandardOutPath</key>
+    <string>/tmp/random-wsg-bg.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/random-wsg-bg.err.log</string>
+</dict>
+</plist>
